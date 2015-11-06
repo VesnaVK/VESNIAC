@@ -12,7 +12,8 @@ Vagrant.configure(2) do |config|
   # `vagrant box outdated`. This is not recommended.
   config.vm.box_check_update = false
 
-  config.vm.network "forwarded_port", guest: 80, host: 8081
+  config.vm.network "forwarded_port", guest: 80, host: 80
+  config.vm.network "forwarded_port", guest: 8080, host: 8080
 
   # config.vm.provider "virtualbox" do |vb|
   #   # Display the VirtualBox GUI when booting the machine
@@ -36,7 +37,7 @@ Vagrant.configure(2) do |config|
     echo mysql-server mysql-server/root_password password superKwel | sudo debconf-set-selections
     echo mysql-server mysql-server/root_password_again password superKwel | sudo debconf-set-selections
     sudo apt-get install -y nginx mysql-server ruby-dev mongodb libsqlite3-dev g++ \
-        sshpass php5-{cli,intl,mysql,sqlite,fpm,mongo}
+        sshpass php5-{cli,intl,mysql,sqlite,fpm,mongo} git
 
     sudo cp /vagrant/conf/nginxPhpFpm.conf /etc/nginx/sites-enabled/default
 
@@ -75,5 +76,8 @@ Vagrant.configure(2) do |config|
         /usr/local/bin/composer install
         cd -
     fi
+
+    sudo chown -R www-data.www-data /srv/www/app/{cache,logs}/
+    sudo chmod -R +rw /srv/www/app/{cache,logs}/
   SHELL
 end

@@ -4,7 +4,6 @@ namespace AppBundle\Mail;
 
 use AppBundle\Mail\MessageFactory;
 use Swift_Mailer;
-use Swift_Message;
 
 class MyMailer
 {
@@ -12,12 +11,12 @@ class MyMailer
      * MessageFactory
      */
     protected $messageFactory = null;
-    
+
     /**
      * Swift_Mailer
      */
     protected $mailer = null;
-    
+
     /**
      * @param MessageFactory $messageFactory
      * @param Swift_Mailer $mailer
@@ -27,9 +26,13 @@ class MyMailer
         $this->messageFactory = $messageFactory;
         $this->mailer         = $mailer;
     }
-    
+
     public function process(array $messageData)
     {
+        if ([] === $messageData) {
+            return;
+        }
+
         $message = $this->messageFactory->create(
                 $messageData['to'],
                 $messageData['from'],
@@ -37,8 +40,7 @@ class MyMailer
                 $messageData['body'],
                 $messageData['alt']
         );
-        
+
         $this->mailer->send($message);
     }
 }
-

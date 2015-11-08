@@ -13,26 +13,26 @@ class MyMailerTest extends PHPUnit_Framework_TestCase
      * @var MyMailer
      */
     protected $fixture = null;
-    
+
     /**
      * @var MessageFactory
      */
     protected $messageFactory = null;
-    
+
     /**
      * @var Swift_Mailer
      */
     protected $mailer = null;
-    
+
     protected function setUp() {
         parent::setUp();
-        
+
         $this->messageFactory = $this->getMock('AppBundle\\Mail\\MessageFactory', [], [], '', false, false);
         $this->mailer = $this->getMock('Swift_Mailer', [], [], '', false, false);
 
         $this->fixture = new MyMailer($this->messageFactory, $this->mailer);
     }
-    
+
     public function testMessageFactoryIsCalledWithMessageData()
     {
         $to      = [uniqid()];
@@ -40,7 +40,7 @@ class MyMailerTest extends PHPUnit_Framework_TestCase
         $subject = uniqid();
         $body    = uniqid();
         $alt     = null;
-        
+
         $messageData = [
             'to'      => $to,
             'from'    => $from,
@@ -60,10 +60,10 @@ class MyMailerTest extends PHPUnit_Framework_TestCase
             ->method('create')
             ->with($to, $from, $subject, $body, $alt)
             ->willReturn($message);
-        
+
         $this->fixture->process($messageData);
     }
-    
+
     public function testMailerIsCalledWithMessage()
     {
         $messageData = [
@@ -73,15 +73,23 @@ class MyMailerTest extends PHPUnit_Framework_TestCase
             'body'    => '',
             'alt'     => null,
         ];
-        
+
         $message = $this->getMock('Swift_Mime_Message');
         $this->messageFactory->method('create')
             ->willReturn($message);
-        
+
         $this->mailer->expects($this->once())
             ->method('send')
             ->with($message);
 
         $this->fixture->process($messageData);
+    }
+
+    public function testMailNotSentWhenShouldNotBe()
+    {
+        $this->mailer->expects($this-> never())
+            ->method('send');
+
+        $this->fixture->process([]);
     }
 }

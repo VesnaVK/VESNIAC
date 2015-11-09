@@ -17,30 +17,25 @@ class ContactType extends AbstractType
         $builder
             ->add('name', 'text', array(
                 'attr' => array(
-                    'placeholder' => 'Enter your name',
                     'pattern'     => '.{2,}' //minlength
                 )
             ))
             ->add('company', 'text', array(
                 'attr' => array(
-                    'placeholder' => 'Enter a company name' ,
                     'pattern'     => '.{3,}' //minlength
                 )
             ))
             ->add('email', 'email', array(
                 'attr' => array(
-                    'placeholder' => 'Enter your email address'
                 )
             ))
             ->add('subject', 'text', array(
                 'attr' => array(
-                    'placeholder' => 'What\'s this about?' ,
                     'pattern'     => '.{3,}' //minlength
                 )
             ))
             ->add('phone', 'text', array(
                 'attr' => array(
-                    'placeholder' => 'Enter your phone number' ,
                     'pattern'     => '.{3,}' //minlength
                 )
             ))
@@ -48,7 +43,6 @@ class ContactType extends AbstractType
                 'attr' => array(
                     'cols' => 90,
                     'rows' => 10,
-                    'placeholder' => 'Enter a comment'
                 )
             ));
     }
@@ -68,8 +62,16 @@ class ContactType extends AbstractType
                 new NotBlank(array('message' => 'Subject should not be blank.')),
                 new Length(array('min' => 3))
             ),
+            'company' => array(
+                new NotBlank(array('message' => 'Company should not be blank.')),
+                new Length(array('min' => 3))
+            ),
+            'phone' => array(
+                new NotBlank(array('message' => 'Phone should not be blank.')),
+                new Length(array('min' => 3))
+            ),
             'comment' => array(
-                new NotBlank(array('comment' => 'Message should not be blank.')),
+                new NotBlank(array('message' => 'Message should not be blank.')),
                 new Length(array('min' => 5))
             )
         ));

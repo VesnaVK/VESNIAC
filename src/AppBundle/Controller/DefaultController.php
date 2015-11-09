@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\Type\ContactType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,8 +42,13 @@ class DefaultController extends Controller
             $messageData['subject'] = 'Contact form submission';
             $messageData['alt']     = true;
 
-            $body = "$request->get('name') \n $request->get('company') \n $request->get('phone') \n $request->get('comment')";
-
+            $body = sprintf(
+                "%s \n %s \n %s \n %s",
+                $request->get('name'),
+                $request->get('company'),
+                $request->get('phone'),
+                $request->get('comment')
+            );
             $messageData['body'] = $body;
 
 //            You can move the business above into a testable class
@@ -60,7 +66,6 @@ class DefaultController extends Controller
     }
     /**
     * @Route("/contact", _name="contact")
-    * @Template()
     */
    public function contactAction(Request $request)
    {
@@ -71,17 +76,22 @@ class DefaultController extends Controller
            $form->bind($request);
 
            if ($form->isValid()) {
-                $messageData['to']      = "admin@example.com";
-                $messageData['from']    = [$form->get('name')->getData() => $form->get('email')->getData()];
+                $messageData['to']      = "vesna.vuynovich@gmail.com";
+                $messageData['from']    = [$form->get('email')->getData() => $form->get('name')->getData()];
                 $messageData['subject'] = $form->get('subject')->getData();
                 $messageData['alt']     = true;
 
-                $body = "$form->get('company')->getData() \n $form->get('phone')->getData() \n $form->get('comment')->getData()";
-
+                $body = sprintf(
+                    "%s \n %s \n %s \n %s",
+                    $form->get('name')->getData(),
+                    $form->get('company')->getData(),
+                    $form->get('phone')->getData(),
+                    $form->get('comment')->getData()
+                );
                 $messageData['body'] = $body;
 
                 $mailer = $this->get("my_mailer");
-                $mailer->send($messageData);
+                $mailer->process($messageData);
 
                $request->getSession()->getFlashBag()->add('success', 'Your email has been sent! Thanks!');
 
@@ -89,8 +99,8 @@ class DefaultController extends Controller
            }
        }
 
-       return array(
-           'form' => $form->createView()
-       );
+        return $this->render('AppBundle::contact.html.twig', array(
+        'form' => $form->createView()
+        ));
    }
 }

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <h1>Drop us a line!</h1>
+
+    <form action="{{ path('app_sendmail') }}" id="contact_form" method="post">
+         <div id="form" >
+            <div class="row">
+                <label for="form_name">Your Name</label>
+                <div class="input">
+                    <input type="text" id="form_name" name="form[name]"  />
+                </div>
+            </div>
+            <div class="row">
+                <label for="form_company">Company/Organization</label>
+                <div class="input">
+                    <input type="text" id="form_company" name="form[company]"  />
+                </div>
+            </div>
+            <div class="row">
+                <label for="form_phone">Phone</label>
+                <div class="input">
+                    <input type="text" id="form_phone" name="form[phone]" />
+                </div>
+            </div>
+            <div class="row">
+                <label for="form_contact">Email Address</label>
+                <div class="input">
+                    <input type="email" id="form_contact" name="form[email]" />
+                </div>
+            </div>
+            <div class="row">
+                <label for="form_comment">Inquiry</label>
+                <div class="input">
+                    <textarea id="form_comment" name="form[comment]">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+            <input type="submit" value="Send">
+    </form>
+{% endblock %}

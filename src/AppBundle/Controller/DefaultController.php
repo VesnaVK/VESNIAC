@@ -58,4 +58,39 @@ class DefaultController extends Controller
 
         return $this->render('AppBundle/formMail.html.twig');
     }
+    /**
+    * @Route("/contact", _name="contact")
+    * @Template()
+    */
+   public function contactAction(Request $request)
+   {
+       $messageData = [];
+       $form = $this->createForm(new ContactType());
+
+       if ($request->isMethod('POST')) {
+           $form->bind($request);
+
+           if ($form->isValid()) {
+                $messageData['to']      = "admin@example.com";
+                $messageData['from']    = [$form->get('name')->getData() => $form->get('email')->getData()];
+                $messageData['subject'] = $form->get('subject')->getData();
+                $messageData['alt']     = true;
+
+                $body = "$form->get('company')->getData() \n $form->get('phone')->getData() \n $form->get('comment')->getData()";
+
+                $messageData['body'] = $body;
+
+                $mailer = $this->get("my_mailer");
+                $mailer->send($messageData);
+
+               $request->getSession()->getFlashBag()->add('success', 'Your email has been sent! Thanks!');
+
+               return $this->redirect($this->generateUrl('contact'));
+           }
+       }
+
+       return array(
+           'form' => $form->createView()
+       );
+   }
 }

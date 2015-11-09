@@ -44,5 +44,21 @@ monolog:
 assetic:
     use_controller: true
 
+###########DEFAULT###################
 #swiftmailer:
 #    delivery_address: me@example.com
+
+######### SPOOL TO TEMP METHOD ######
+#swiftmailer:
+#    spool:
+#        type:file
+#        path:/tmp
+
+########## MAILCATCHER METHOD #######
+swiftmailer:
+    transport:      smtp
+    host:           localhost
+    port:           1025
+    sender_address: apache@example.com
+    logging:        %kernel.debug%
+

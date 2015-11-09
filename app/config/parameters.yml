@@ -7,6 +7,6 @@ parameters:
     database_password: null
     mailer_transport: smtp
     mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
+    mailer_user: vesna@vesnakovach.com
+    mailer_password: HWG2miUYVBzo-e1aND7f_w
     secret: 5602f1ab12458c732ca423862365e38ea062daee

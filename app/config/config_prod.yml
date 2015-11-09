@@ -25,3 +25,23 @@ monolog:
             level: debug
         console:
             type:  console
+            
+##### NO SWIFTMAILER ENTRY HERE BY DEFAULT ######
+
+############ SAMPLE GMAIL SETUP #################
+#swiftmailer:
+#    transport:      smtp
+#    host:           smtp-relay.gmail.com
+#    port:           25
+#    encryption:     tls
+#    sender_address: apache@example.com
+#    logging:        %kernel.debug%
+    
+############ SAMPLE MANDRILL SETUP ################
+swiftmailer:
+    transport:      smtp
+    host:           smtp.mandrillapp.com
+    port:           587
+    encryption:     
+    sender_address: vesna@vesnakovach.com
+    logging:        %kernel.debug%

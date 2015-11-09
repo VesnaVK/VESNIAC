@@ -70,12 +70,15 @@ Vagrant.configure(2) do |config|
     sudo mkdir /srv/www -p
     sudo chown -R vagrant.vagrant /srv/www
 
-    rsync -r /vagrant/ /srv/www/
+    echo "copying files from share into guest"
+    rsync -r --exclude vendors --exclude bin /vagrant/ /srv/www/
 
     if [ -f /srv/www/composer.lock ] ; then
         cd /srv/www
         /usr/local/bin/composer install
         cd -
+    else
+        echo "ERROR: Composer lock file not found!"
     fi
 
     sudo chown -R www-data.www-data /srv/www/app/{cache,logs}/

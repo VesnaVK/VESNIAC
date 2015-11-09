@@ -1,5 +1,5 @@
 app_homepage:
-    pattern:  /hello{name}
+#    pattern:  /hello{name}
     defaults: { _controller: AppBundle:Default:index }
     
 app_redirect:

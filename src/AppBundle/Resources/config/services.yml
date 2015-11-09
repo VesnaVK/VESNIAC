@@ -1,7 +1,7 @@
+services:
+    message_factory:
+        class:     AppBundle\Mail\MessageFactory
 
-#    message_factory:
-#        class:     AppBundle\Mail\MessageFactory
-#    
-#    my_mailer:
-#        class:     AppBundle\Mail\MyMailer
-#        arguments: ["@swiftmailer", "@message_factory"]
+    my_mailer:
+        class:     AppBundle\Mail\MyMailer
+        arguments: ["@message_factory", "@mailer"]

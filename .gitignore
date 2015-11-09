@@ -12,3 +12,4 @@
 
 # Vagrant
 /.vagrant
+/nbproject/private/

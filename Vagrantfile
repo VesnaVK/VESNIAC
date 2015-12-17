@@ -71,7 +71,7 @@ Vagrant.configure(2) do |config|
     sudo chown -R vagrant.vagrant /srv/www
 
     echo "copying files from share into guest"
-    rsync -r --exclude vendors --exclude bin /vagrant/ /srv/www/
+    rsync -r --exclude vendor --exclude bin /vagrant/ /srv/www/
 
     if [ -f /srv/www/composer.lock ] ; then
         cd /srv/www
